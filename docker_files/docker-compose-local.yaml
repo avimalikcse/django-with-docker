@@ -1,7 +1,7 @@
 version: '3.2'
 
 services:
-    my_django_service:
+    my_django:
       build: .
       stdin_open: true
       tty: true
@@ -10,16 +10,16 @@ services:
       working_dir: /app
       command: python3 manage.py runserver 0.0.0.0:8000
       volumes:
-        - ../my_project/my_project:/app
+        - ../sample:/app
       environment:
         - "PYTHONUNBUFFERED=1"
       expose:
         - "8000"
       depends_on:
-        - my_mariadb_service
+        - mariadb
       
 
-    my_mariadb_service:
+    mariadb:
       image: mariadb:10.2
       environment:
         MYSQL_ROOT_PASSWORD: root
@@ -30,7 +30,4 @@ services:
       volumes:
        - ../data/mariadb:/var/lib/mysql
 
-    my_redis_service:
-      image: redis
-      volumes:
-        - ../data/redis/data/:/data
+    
